@@ -17,6 +17,7 @@ export function TaskCard(props: TaskCardProps) {
                         <LabelStatus color={"#67BF"}/>
                     </div>
                     <p>{props.data.content}</p>
+                    <span>{props.data.createdAt}</span>
                 </TaskCardContainer>
             )}
         </Draggable>

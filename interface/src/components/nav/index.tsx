@@ -8,8 +8,8 @@ export function Navbar() {
         <NavStyle>
             <Stack size={32} className="icon"/>
             <ul>
-                <Link to={"#"}>Projects</Link>
-                <Link to={"#"}>Tasks</Link>
+                <Link to={"/dashboard/projects"}>Projects</Link>
+                <Link to={"/dashboard/2/tasks"}>Tasks</Link>
                 <Link to={"#"}>Teams</Link>
                 <div className="loggedUser">
                     <Link to={"#"}>Gabriel</Link>

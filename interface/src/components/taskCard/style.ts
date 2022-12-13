@@ -26,6 +26,13 @@ export const TaskCardContainer = styled.div`
         line-height: 20px;
         font-size: 15px;
     }
+    span {
+        display: flex;
+        justify-content: flex-end;
+        color: ${props => props.theme.colors.text}44;
+        font-size: ${props => props.theme.font.small}px;
+        margin-top: 5px;
+    }
 `
 export const LabelStatus = styled.span`
     width: 10px;
