@@ -29,9 +29,18 @@ export const TaskCardContainer = styled.div`
     span {
         display: flex;
         justify-content: flex-end;
+        align-items: center;
         color: ${props => props.theme.colors.text}44;
         font-size: ${props => props.theme.font.small}px;
         margin-top: 5px;
+        svg {
+            margin-right: 10px;
+            cursor: pointer;
+            font-size: ${props => props.theme.font.medium}px;
+            &:hover {
+                color: ${props => props.theme.colors.error};
+            }
+        }
     }
 `
 export const LabelStatus = styled.span`

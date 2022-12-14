@@ -5,7 +5,7 @@ import { MouseEvent } from "react";
 export function Modal({ id = "modal", onClose = () => {}, children }: any) {
     const outsideClose = (event: MouseEvent) => {
         if(event.target.id === id) {
-            onClose(false);
+            onClose({mode: "", visible: false});
         }
     }
 
@@ -13,7 +13,7 @@ export function Modal({ id = "modal", onClose = () => {}, children }: any) {
         <ModalStyle id={id} onClick={(event) => outsideClose(event)}>
             <div className="container">
                 <header>
-                    <button className="close" onClick={() => onClose(false)}><X/></button>
+                    <button className="close" onClick={() => onClose({mode: "", visible: false})}><X/></button>
                 </header>
                 <div className="content">
                     {children}

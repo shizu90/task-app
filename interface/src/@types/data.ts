@@ -27,3 +27,8 @@ export interface Project {
     title: string
     description: string
 }
+
+export interface IModal {
+    mode: string
+    visible: boolean
+}

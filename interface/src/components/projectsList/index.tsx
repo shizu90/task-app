@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import { Link } from "react-router-dom"
 import { Project } from "../../@types/data"
 import { Button } from "../button"
@@ -14,6 +14,21 @@ interface ProjectsListProps {
 
 export function ProjectsList(props: ProjectsListProps) {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const [projects, setProjects] = useState<Project[]>(props.data);
+    const [projectData, setProjectData] = useState<Project>({id: "template", title: "", description: ""});
+    const handleRemoveProject = (id: string) => {
+        setProjects(projects.filter(project => {
+            return project.id !== id
+        }))
+    };
+
+    const handleInsertProject = () => {
+        if(projectData.title.length > 1 && projectData.description.length > 1) {
+            setProjects([...projects, projectData]);
+        }
+        setIsModalVisible(false);
+        setProjectData({id: "template", title: "", description: ""})
+    }
 
     return (
         <ProjectsListStyle>
@@ -24,16 +39,16 @@ export function ProjectsList(props: ProjectsListProps) {
                 {isModalVisible && 
                     <Modal onClose={setIsModalVisible}>
                         <form>
-                            <TextInput placeholder="Project title"/>
-                            <TextInput placeholder="Project description"/>
-                            <Button type="submit" value="Save" onClick={() => setIsModalVisible(false)}/>    
+                            <TextInput placeholder="Project title" onChange={(event) => 
+                                setProjectData({...projectData, title: event.target.value})} value={projectData.title}/>
+                            <TextInput placeholder="Project description" onChange={(event) => 
+                                setProjectData({...projectData, description: event.target.value})} value={projectData.description}/>
+                            <Button type="submit" value="Save" onClick={() => handleInsertProject()}/>    
                         </form>
                     </Modal>
                 }
-                {props.data.map((project, index) => (
-                    <Link key={project.id} to={`/dashboard/${project.id}/tasks`}>
-                        <ProjectCard data={project}/>
-                    </Link>
+                {projects.map((project, index) => (
+                    <ProjectCard key={project.id} data={project}/>
                 ))}
             </div>
         </ProjectsListStyle>
