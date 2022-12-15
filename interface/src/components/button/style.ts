@@ -11,6 +11,7 @@ export const ButtonStyle = styled.input`
     font-weight: 600;
     border: none;
     outline: none;
+    text-align: center;
     cursor: pointer;
     transition: 0.2s background-color ease-out;
     &:hover, &:focus {

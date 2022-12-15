@@ -100,9 +100,6 @@ export function TasksBoard() {
     return (
         <DragDropContext onDragEnd={(result) => {handleDrop(result)}}>
             <BoardContainer>
-                <header className="board_header">
-                    <p>Project ID > Tasks</p>
-                </header>
                 <div className="board_body">
                     {Object.keys(lists).map((list) => {
                         const current = lists[list as unknown as "todo" | "doing" | "paused" | "done"];
@@ -112,9 +109,11 @@ export function TasksBoard() {
                                 data={current.tasks} 
                                 creatable={current.creatable} 
                                 id={current.id}
+                                setTaskList={setData}
+                                taskList={data}
                             />
-                        )
-                    })}
+                        )})
+                    }
                 </div>
             </BoardContainer>
         </DragDropContext>

@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react"
 import { Link } from "react-router-dom"
 import { Project } from "../../@types/data"
+import { useModal } from "../../hooks/modal"
 import { Button } from "../button"
 import { Modal } from "../modal"
 import { ProjectCard } from "../projectCard"
@@ -13,9 +14,14 @@ interface ProjectsListProps {
 
 
 export function ProjectsList(props: ProjectsListProps) {
-    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const {isModalVisible, setIsModalVisible} = useModal();
     const [projects, setProjects] = useState<Project[]>(props.data);
     const [projectData, setProjectData] = useState<Project>({id: "template", title: "", description: ""});
+    
+    const handleClose = () => {
+        setIsModalVisible({mode: "", visible: false});
+    }
+
     const handleRemoveProject = (id: string) => {
         setProjects(projects.filter(project => {
             return project.id !== id
@@ -26,18 +32,19 @@ export function ProjectsList(props: ProjectsListProps) {
         if(projectData.title.length > 1 && projectData.description.length > 1) {
             setProjects([...projects, projectData]);
         }
-        setIsModalVisible(false);
+        handleClose();
         setProjectData({id: "template", title: "", description: ""})
     }
 
     return (
         <ProjectsListStyle>
             <div className="main">
-                <div className="create" onClick={() => setIsModalVisible(true)}>
+                <div className="create" onClick={() => setIsModalVisible({mode: "create", visible: true})}>
                     +
                 </div>
-                {isModalVisible && 
-                    <Modal onClose={setIsModalVisible}>
+                {isModalVisible.visible ?
+                isModalVisible.mode === "create" && (
+                    <Modal onClose={handleClose}>
                         <form>
                             <TextInput placeholder="Project title" onChange={(event) => 
                                 setProjectData({...projectData, title: event.target.value})} value={projectData.title}/>
@@ -46,6 +53,7 @@ export function ProjectsList(props: ProjectsListProps) {
                             <Button type="submit" value="Save" onClick={() => handleInsertProject()}/>    
                         </form>
                     </Modal>
+                ) : null
                 }
                 {projects.map((project, index) => (
                     <ProjectCard key={project.id} data={project}/>
