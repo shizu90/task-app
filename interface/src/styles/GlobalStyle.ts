@@ -38,5 +38,6 @@ export default createGlobalStyle`
     font-size: 16px;
     background-color: #1E1E1E;
     color: #E1E1E6;
+    overflow-x: hidden;
   }
 `

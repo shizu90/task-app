@@ -33,10 +33,10 @@ export function TaskCard(props: TaskCardProps) {
     }
 
     const handleEdit = () => {
-        setTask({...task, content: content})
-        props.setTasksList(props.tasksList.filter(t => {
+        setTask({...task, content})
+        props.setTasksList(props.tasksList.map(t => {
             if(t.id === props.data.id) {
-                return task;
+                return {...task, content};
             }else return t;
         }));
         handleClose();
@@ -46,9 +46,9 @@ export function TaskCard(props: TaskCardProps) {
         <>
             {isModalVisible ? isModalVisible.mode === "delete" ? (
                 <Modal onClose={handleClose}>
-                    <form style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                        <p>Delete task?</p>
-                        <div style={{display: "flex", gap: "15px", justifyContent: "center", alignItems: "center"}}>
+                    <h4>Delete task?</h4>
+                    <form>
+                        <div>
                             <Button value="Yes" onClick={() => handleDelete()}/>
                             <Button value="No" onClick={() => handleClose()}/>
                         </div>
@@ -56,6 +56,7 @@ export function TaskCard(props: TaskCardProps) {
                 </Modal>
             ) : isModalVisible.mode === "edit" ? (
                 <Modal onClose={handleClose}>
+                    <h4>Edit task</h4>
                     <form>
                         <p>Task id: {task.id}</p>
                         <p>Task project id: {task.projectId}</p>

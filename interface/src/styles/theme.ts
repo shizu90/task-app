@@ -9,11 +9,11 @@ const theme = {
         error: "#FF2B5E"
     },
     font: {
-        large: 24,
-        big: 20,
-        medium: 18,
-        small: 14
-    }
+        lg: 20,
+        md: 16,
+        sm: 12
+    },
+
 }
 
 export default theme;

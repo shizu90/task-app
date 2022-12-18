@@ -15,11 +15,11 @@ export const TaskListContainer = styled.div`
         height: 32px;
         h2 {
             font-weight: 500;
-            font-size: ${props => props.theme.font.large}px;
+            font-size: ${props => props.theme.font.lg}px;
             padding: 0 10px;
         }
         input {
-            font-size: ${props => props.theme.font.medium}px;
+            font-size: ${props => props.theme.font.md}px;
             padding: 5px 10px 5px 10px;
         }
     }

@@ -17,10 +17,10 @@ export const ProjectCardStyle = styled.div`
     h4 {
         display: flex;
         align-items: center;
-        font-size: ${props => props.theme.font.large}px;
+        font-size: ${props => props.theme.font.lg}px;
         span {margin-left: 10px}
         span, a {
-            font-size: ${props => props.theme.font.medium + 4}px;
+            font-size: ${props => props.theme.font.md + 4}px;
             color: ${props => props.theme.colors.text}55;
             &:hover {
                 color: #902bfc;
@@ -29,7 +29,7 @@ export const ProjectCardStyle = styled.div`
     }
     p {
         margin-top: 25px;
-        font-size: ${props => props.theme.font.small}px;
+        font-size: ${props => props.theme.font.sm}px;
         color: ${props => props.theme.colors.text}cc;
     }
     span:not(h4>span) {
@@ -38,12 +38,12 @@ export const ProjectCardStyle = styled.div`
         align-items: center;
         svg {
             margin-right: 10px;
-            font-size: ${props => props.theme.font.medium}px;
+            font-size: ${props => props.theme.font.md}px;
             &:hover {
                 color: ${props => props.theme.colors.error};
             }
         }
-        font-size: ${props => props.theme.font.small}px; 
+        font-size: ${props => props.theme.font.sm}px; 
         color: ${props => props.theme.colors.text}55;
     }
 `

@@ -2,12 +2,11 @@ import styled from "styled-components";
 
 export const ButtonStyle = styled.input`
     padding: 10px 20px 10px 20px;
-    font-size: 20px;
     background-color: ${props => props.theme.colors.primary};
     border: none;
     border-radius: 5px;
     color: ${props => props.theme.colors.text};
-    font-size: ${props => props.theme.font.large};
+    font-size: ${props => props.theme.font.md}px;
     font-weight: 600;
     border: none;
     outline: none;

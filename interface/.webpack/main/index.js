@@ -166,7 +166,7 @@ var mainWindow;
 function createWindow() {
   mainWindow = new electron__WEBPACK_IMPORTED_MODULE_2__.BrowserWindow({
     // icon: path.join(assetsPath, 'assets', 'icon.png'),
-    minWidth: 950,
+    minWidth: 1050,
     minHeight: 550,
     backgroundColor: '#191622',
     webPreferences: {

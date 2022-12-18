@@ -1,5 +1,4 @@
-import { FormEvent, useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react"
 import { Project } from "../../@types/data"
 import { useModal } from "../../hooks/modal"
 import { Button } from "../button"
@@ -22,12 +21,6 @@ export function ProjectsList(props: ProjectsListProps) {
         setIsModalVisible({mode: "", visible: false});
     }
 
-    const handleRemoveProject = (id: string) => {
-        setProjects(projects.filter(project => {
-            return project.id !== id
-        }))
-    };
-
     const handleInsertProject = () => {
         if(projectData.title.length > 1 && projectData.description.length > 1) {
             setProjects([...projects, projectData]);
@@ -45,6 +38,7 @@ export function ProjectsList(props: ProjectsListProps) {
                 {isModalVisible.visible ?
                 isModalVisible.mode === "create" && (
                     <Modal onClose={handleClose}>
+                        <h4>Save new project</h4>
                         <form>
                             <TextInput placeholder="Project title" onChange={(event) => 
                                 setProjectData({...projectData, title: event.target.value})} value={projectData.title}/>
@@ -56,7 +50,7 @@ export function ProjectsList(props: ProjectsListProps) {
                 ) : null
                 }
                 {projects.map((project, index) => (
-                    <ProjectCard key={project.id} data={project}/>
+                    <ProjectCard key={project.id} data={project} setProjects={setProjects} projects={projects}/>
                 ))}
             </div>
         </ProjectsListStyle>

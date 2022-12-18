@@ -45,7 +45,7 @@ export function TaskList(props: TaskListProps) {
             </header>
             {isModalVisible.visible && 
                 <Modal onClose={handleClose}>
-                    <h1>Save a task</h1>
+                    <h4>Save new task</h4>
                     <form>
                         <TextInput placeholder="Task content" value={taskData.content} onChange={(e) => {setTaskData({...taskData, content: e.target.value})}}/>
                         <Button type="submit" value="Save" onClick={() => {createTask()}}/>

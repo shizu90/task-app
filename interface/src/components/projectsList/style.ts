@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ProjectsListStyle = styled.div`
     color: ${props => props.theme.colors.text};
-    font-size: ${props => props.theme.font.large}px;
+    font-size: ${props => props.theme.font.lg}px;
     width: 100%;
     min-height: calc(100vh - 52px);
     display: flex;
@@ -25,7 +25,7 @@ export const ProjectsListStyle = styled.div`
             text-decoration: none;
         }
         .create {
-            font-size: ${props => props.theme.font.large * 2}px;
+            font-size: ${props => props.theme.font.md * 2}px;
             background-color: ${props => props.theme.colors.primary};
             display: flex;
             align-items: center;

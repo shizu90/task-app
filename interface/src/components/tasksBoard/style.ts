@@ -9,7 +9,7 @@ export const BoardContainer = styled.div`
         background-color: ${props => props.theme.colors.accentBg};
         padding: 15px 20px 15px 20px;
         border-radius: 5px;
-        font-size: ${props => props.theme.font.medium}px;
+        font-size: ${props => props.theme.font.md}px;
         font-weight: 600;
     }
     .board_body {

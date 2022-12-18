@@ -31,12 +31,12 @@ export const TaskCardContainer = styled.div`
         justify-content: flex-end;
         align-items: center;
         color: ${props => props.theme.colors.text}44;
-        font-size: ${props => props.theme.font.small}px;
+        font-size: ${props => props.theme.font.sm}px;
         margin-top: 5px;
         svg {
             margin-right: 10px;
             cursor: pointer;
-            font-size: ${props => props.theme.font.medium}px;
+            font-size: ${props => props.theme.font.md}px;
             &:hover {
                 color: ${props => props.theme.colors.error};
             }

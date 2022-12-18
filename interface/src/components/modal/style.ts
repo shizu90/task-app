@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ModalStyle = styled.div`
-    width: 100%;
+    min-width: 100%;
     height: 100vh;
     position: absolute;
     top: 0;
@@ -11,7 +11,6 @@ export const ModalStyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
     .container {
         background-color: #1E1E1E;
         color: ${props => props.theme.colors.text};
@@ -29,7 +28,7 @@ export const ModalStyle = styled.div`
             width: 100%;
             .close {
                 border: none;
-                font-size: ${props => props.theme.font.large}px;
+                font-size: ${props => props.theme.font.md}px;
                 background-color: transparent;
                 transition: 0.2s color ease-out;
                 cursor: pointer;
@@ -43,12 +42,23 @@ export const ModalStyle = styled.div`
             justify-content: center;
             align-items: center;
             height: 100%;
+            width: 100%;
             flex-direction: column;
             gap: 30px;
             form {
                 display: flex;
                 flex-direction: column;
                 gap: 20px;
+                width: 60%;
+                div {
+                    display: flex;
+                    gap: 16px;
+                    justify-content: center;
+                    align-items: center;
+                    input {
+                        width: 35%;
+                    }
+                }
             }
         }
     }
