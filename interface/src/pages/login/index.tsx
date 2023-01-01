@@ -1,32 +1,41 @@
 import { Button } from "../../components/button";
 import { TextInput } from "../../components/textInput";
-import { EnvelopeSimple, Lock, User } from "phosphor-react";
+import { EnvelopeSimple, Lock, User, XCircle } from "phosphor-react";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginPageStyle } from "./style";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useContext, useRef, useState } from "react";
 import { handleFormData } from "../../hooks/formData";
 import { LoginData, SignUpData } from "../../@types/data";
 import { useApi } from "../../hooks/api";
 import { regex } from "../../modules/regex";
 import { ErrorMessage } from "../../components/errorMessage";
+import { AxiosError } from "axios";
+import toast from "react-hot-toast";
+import { AuthContext } from "../../context/AuthContext";
 
 export function LoginPage() {
     const [form, setForm] = useState<Number>(0);
     const [formData, setFormData] = useState<LoginData & SignUpData>({username: "", email: "", password: "", confirmPassword: ""});
     const {login, signUp} = useApi();
+    const auth = useContext(AuthContext);
     const formHtml = useRef<HTMLFormElement>(null);
     const navigate = useNavigate();
 
     const handleSetForm = (formId: number) => {
         setForm(formId);
+        setFormData({username: "", email: "", password: "", confirmPassword: ""});
         formHtml.current?.reset();
     }
 
     const handleLogin = (event: FormEvent) => {
         const data: LoginData = handleFormData(event) as unknown as LoginData;
         if(data.email.match(regex.email) && data.password.match(regex.password)) {
-            login(data);
-            setForm(1);
+            login(data).then(res => {
+                auth.setAuth(res.data);
+                navigate("/dashboard");
+            }).catch((err: AxiosError) => {
+                toast.error(err.response?.data.message);
+            });
         }
         formHtml.current?.reset();
     }
@@ -35,8 +44,12 @@ export function LoginPage() {
         const data: SignUpData = handleFormData(event) as unknown as SignUpData;
         if(data.email.match(regex.email) && data.password.match(regex.password) && 
         data.username.match(regex.username) && data.confirmPassword.match(data.password)) {
-            signUp(data);
-            setForm(0);
+            signUp(data).then(res => {
+                toast.success("Account created.");
+                setForm(0);
+            }).catch((err: AxiosError) => {
+                toast.error(err.response?.data.message);
+            });
         }
         formHtml.current?.reset();
     }

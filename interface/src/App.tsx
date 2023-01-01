@@ -4,10 +4,21 @@ import { DashboardPage } from './pages/dashboard';
 import { LoginPage } from './pages/login';
 import { ProjectsPage } from './pages/dashboard/projects';
 import { TasksPage } from './pages/dashboard/tasks';
+import { Toaster } from 'react-hot-toast';
+import theme from './styles/theme';
+import styled from 'styled-components';
+
+const AppStyle = styled.div`
+  .toaster {
+    background-color: ${props => props.theme.colors.primary};
+    color: ${props => props.theme.colors.text};
+  }
+`
 
 export function App() {
   return (
-    <>
+    <AppStyle>
+      <Toaster toastOptions={{className: "toaster", success: {iconTheme: {primary: theme.colors.primary, secondary: theme.colors.text}}}}/>
       <HashRouter>
         <Routes>
           <Route path="/" element={ <LoginPage/> }/>
@@ -17,6 +28,6 @@ export function App() {
         </Routes>
       </HashRouter>
       <GlobalStyle/>
-    </>
+    </AppStyle>
   )
 }
