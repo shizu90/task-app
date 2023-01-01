@@ -3,37 +3,42 @@ import { TextInput } from "../../components/textInput";
 import { EnvelopeSimple, Lock, User } from "phosphor-react";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginPageStyle } from "./style";
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { handleFormData } from "../../hooks/formData";
 import { LoginData, SignUpData } from "../../@types/data";
 import { useApi } from "../../hooks/api";
+import { regex } from "../../modules/regex";
+import { ErrorMessage } from "../../components/errorMessage";
 
 export function LoginPage() {
     const [form, setForm] = useState<Number>(0);
+    const [formData, setFormData] = useState<LoginData & SignUpData>({username: "", email: "", password: "", confirmPassword: ""});
     const {login, signUp} = useApi();
-
+    const formHtml = useRef<HTMLFormElement>(null);
     const navigate = useNavigate();
 
     const handleSetForm = (formId: number) => {
         setForm(formId);
-
+        formHtml.current?.reset();
     }
 
     const handleLogin = (event: FormEvent) => {
         const data: LoginData = handleFormData(event) as unknown as LoginData;
-        if(data.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/) && data.password.match(/^.{6,24}$/)) {
-            setForm(1);
+        if(data.email.match(regex.email) && data.password.match(regex.password)) {
             login(data);
-
+            setForm(1);
         }
+        formHtml.current?.reset();
     }
 
     const handleSignUp = (event: FormEvent) => {
         const data: SignUpData = handleFormData(event) as unknown as SignUpData;
-        if(data.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/) && data.password.match(/^.{6,24}$/) && 
-        data.username.match(/^[A-Za-z0-9 _]{2,24}$/) && data.confirmPassword.match(data.password)) {
+        if(data.email.match(regex.email) && data.password.match(regex.password) && 
+        data.username.match(regex.username) && data.confirmPassword.match(data.password)) {
             signUp(data);
+            setForm(0);
         }
+        formHtml.current?.reset();
     }
 
     return (
@@ -41,7 +46,7 @@ export function LoginPage() {
             {form === 0 ? (
                 <h1>Enter your credentials</h1>
             ) : (
-                <h1>Sign up</h1>
+                <h1>Create an account</h1>
             )}
             <div className="cubes">
                 <div></div>
@@ -56,53 +61,95 @@ export function LoginPage() {
             </div>
             {form === 0 ? (
                 <>
-                    <form onSubmit={(e) => handleLogin(e)}>
+                    <form onSubmit={(e) => handleLogin(e)} ref={formHtml}>
                         <div className="group">
                             <div className="input">
                                 <EnvelopeSimple size={32}/>
-                                <TextInput type="text" placeholder="Email" spellCheck={false} id="email" name="email"/>
+                                <TextInput type="text" placeholder="Email" spellCheck={false} id="email" name="email"
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                />
                             </div>
+                            <ErrorMessage 
+                                visible={formData.email !== "" && !formData.email.match(regex.email)} 
+                                value={"Invalid e-mail."}
+                            />
                         </div>
                         <div className="group">
                             <div className="input">
                                 <Lock size={32}/>
-                                <TextInput type="text" placeholder="Password" spellCheck={false} id="password" name="password"/>
+                                <TextInput type="password" placeholder="Password" spellCheck={false} id="password" name="password"
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                />
                             </div>
+                            <ErrorMessage 
+                                visible={formData.password !== "" && !formData.password.match(regex.password)} 
+                                value={"Invalid password."}
+                            />
                         </div>
                         <Button type="submit" value="Login"/>
                     </form>
-                    <Link to="#" onClick={() => setForm(1)}>Don't have an account? Sign up here</Link>
+                    <Link to="#" onClick={() => handleSetForm(1)}>Don't have an account? Sign up here</Link>
                 </>
             ) : (
                 <>
-                    <form onSubmit={(e) => handleSignUp(e)}>
+                    <form onSubmit={(e) => handleSignUp(e)} ref={formHtml}>
                         <div className="group">
                             <div className="input">
                                 <User size={32}/>
-                                <TextInput type="text" placeholder="Username" spellCheck={false} id="username" name="username"/>
+                                <TextInput type="text" placeholder="Username" spellCheck={false} id="username" name="username"
+                                    value={formData.username}
+                                    onChange={(e) => setFormData({...formData, username: e.target.value})}
+                                />
                             </div>
+                            <ErrorMessage 
+                                visible={formData.username !== "" && !formData.username.match(regex.username)} 
+                                value={"Invalid username."}
+                            />
                         </div>
                         <div className="group">
                             <div className="input">
                                 <EnvelopeSimple size={32}/>
-                                <TextInput type="text" placeholder="Email" spellCheck={false} id="email" name="email"/>
+                                <TextInput type="text" placeholder="Email" spellCheck={false} id="email" name="email"
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                />
                             </div>
+                            <ErrorMessage 
+                                visible={formData.email !== "" && !formData.email.match(regex.email)} 
+                                value={"Invalid e-mail."}
+                            />
                         </div>
                         <div className="group">
                             <div className="input">
                                 <Lock size={32}/>
-                                <TextInput type="password" placeholder="Password" spellCheck={false} id="password" name="password"/>
+                                <TextInput type="password" placeholder="Password" spellCheck={false} id="password" name="password"
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                />
                             </div>
+                            <ErrorMessage 
+                                visible={formData.password !== "" && !formData.password.match(regex.password)} 
+                                value={"Invalid password."}
+                            />
                         </div>
                         <div className="group">
                             <div className="input">
                                 <Lock size={32}/>
-                                <TextInput type="password" placeholder="Confirm password" spellCheck={false} id="confirmPassword" name="confirmPassword"/>
+                                <TextInput type="password" placeholder="Confirm password" spellCheck={false} id="confirmPassword" name="confirmPassword"
+                                    value={formData.confirmPassword}
+                                    onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                                />
                             </div>
+                            <ErrorMessage 
+                                visible={formData.confirmPassword !== "" && !formData.confirmPassword.match(formData.password)} 
+                                value={"Passwords don't match."}
+                            />
                         </div>
-                        <Button type="button" value="Create"/>
+                        <Button type="submit" value="Create"/>
                     </form>
-                    <Link to="#" onClick={() => setForm(0)}>Already have an account? Login here</Link>
+                    <Link to="#" onClick={() => handleSetForm(0)}>Already have an account? Login here</Link>
                 </>
                 
             )}

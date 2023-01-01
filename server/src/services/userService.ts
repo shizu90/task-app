@@ -133,6 +133,7 @@ export async function updateUser(request: FastifyRequest): Promise<void> {
 }
 
 export async function login(request: FastifyRequest, fastify: FastifyInstance): Promise<string> {
+    console.log(request.body);
     const getBody = zod.object({
         email: zod.string(),
         password: zod.string()

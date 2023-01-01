@@ -19,8 +19,7 @@ function createWindow () {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      devTools: true
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     }
   })
 
@@ -29,7 +28,6 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
-  mainWindow.webContents.openDevTools();
 }
 
 async function registerListeners () {

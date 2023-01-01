@@ -172,15 +172,13 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: '/home/gabriell9090/programs/task-app/interface/.webpack/renderer/main_window/preload.js',
-      devTools: true
+      preload: '/home/gabriell9090/programs/task-app/interface/.webpack/renderer/main_window/preload.js'
     }
   });
   mainWindow.loadURL('http://localhost:3000/main_window');
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
-  mainWindow.webContents.openDevTools();
 }
 function registerListeners() {
   return _registerListeners.apply(this, arguments);

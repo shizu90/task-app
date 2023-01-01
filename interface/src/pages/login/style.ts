@@ -108,7 +108,7 @@ export const LoginPageStyle = styled.section`
         flex-direction: column;
         width: 400px;
         .group {
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             .input {
                 display: flex;
                 background-color: #191919;
