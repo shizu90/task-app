@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const BoardContainer = styled.div`
     padding: 20px;
-    margin-left: 180px;
+    margin-left: 140px;
     display: flex;
     flex-direction: column;
     .board_header {

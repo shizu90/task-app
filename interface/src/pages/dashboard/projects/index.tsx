@@ -1,7 +1,5 @@
 import { Project } from "../../../@types/data";
-import { Navbar } from "../../../components/nav";
 import { ProjectsList } from "../../../components/projectsList";
-import { DashboardStyle } from "../style";
 
 const projects: Project[] = [
     {id: "abc1", title: "Tasks", description: "A task app. asdfasd fas fgsfgs sfdgsdfg sdfghdsfgh"},
@@ -11,11 +9,6 @@ const projects: Project[] = [
 
 export function ProjectsPage() {
     return (
-        <DashboardStyle>
-            <Navbar/>
-            <main>
-                <ProjectsList data={projects}/>
-            </main>
-        </DashboardStyle>
+        <ProjectsList data={projects}/>
     )
 }

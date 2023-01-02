@@ -7,6 +7,6 @@ export const DashboardStyle = styled.section`
         display: flex;
         margin-top: 52px;
         padding-top: 1.3rem;
-        padding-left: 1.3rem;
+        margin-left: 1rem;
     }
 `

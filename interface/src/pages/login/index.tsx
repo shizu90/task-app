@@ -32,6 +32,7 @@ export function LoginPage() {
         if(data.email.match(regex.email) && data.password.match(regex.password)) {
             login(data).then(res => {
                 auth.setAuth(res.data);
+                localStorage.setItem("auth", JSON.stringify(res.data));
                 navigate("/dashboard");
             }).catch((err: AxiosError) => {
                 toast.error(err.response?.data.message);

@@ -4,7 +4,7 @@ export const ProjectsListStyle = styled.div`
     color: ${props => props.theme.colors.text};
     font-size: ${props => props.theme.font.lg}px;
     width: 100%;
-    min-height: calc(100vh - 52px);
+    min-height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
     justify-content: center;
