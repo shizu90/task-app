@@ -39,3 +39,10 @@ export interface SignUpData {
     password: string
     confirmPassword: string
 }
+
+export interface UserData {
+    username: string
+    email: string
+    password: string
+    imgUrl: string
+}

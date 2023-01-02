@@ -132,8 +132,7 @@ export async function updateUser(request: FastifyRequest): Promise<void> {
     }
 }
 
-export async function login(request: FastifyRequest, fastify: FastifyInstance): Promise<string> {
-    console.log(request.body);
+export async function login(request: FastifyRequest, fastify: FastifyInstance): Promise<object> {
     const getBody = zod.object({
         email: zod.string(),
         password: zod.string()
@@ -152,5 +151,5 @@ export async function login(request: FastifyRequest, fastify: FastifyInstance): 
         expiresIn: "7 days"
     });
 
-    return token;
+    return {token, id: foundByEmail.id, username: foundByEmail.username};
 }

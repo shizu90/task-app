@@ -20,7 +20,7 @@ export async function userController(fastify: FastifyInstance) {
 
     fastify.post("/users/login", async (request) => {
         const token = await login(request, fastify);
-        return { token };
+        return token;
     });
 
     fastify.delete("/users/:id", {onRequest: [auth]}, async (request, response) => {
