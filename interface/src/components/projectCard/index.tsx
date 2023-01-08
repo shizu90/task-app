@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Modal } from "../modal";
 import { Button } from "../button";
 import { IModal } from "../../hooks/modal";
+import { TextInput } from "../textInput";
 
 interface ProjectCardProps {
     data: Project
@@ -15,6 +16,7 @@ interface ProjectCardProps {
 
 export function ProjectCard(props: ProjectCardProps) {
     const [isModalVisible, setIsModalVisible] = useState<IModal>({mode: "", visible: false});
+    const [projectData, setProjectData] = useState({title: props.data.title, desc: props.data.description});
 
     const handleClose = () => {
         setIsModalVisible({mode: "", visible: false});
@@ -27,10 +29,21 @@ export function ProjectCard(props: ProjectCardProps) {
         handleClose();
     };
 
+    const handleEditProject = (id: string) => {
+        props.setProjects(props.projects.map(project => {
+            if(project.id === id) {
+                project.title = projectData.title;
+                project.description = projectData.desc;
+            }
+            return project;
+        }));
+        handleClose();
+    }
+
     return (
         <>
             {isModalVisible ? isModalVisible.mode === "delete" ? (
-                <Modal onClose={setIsModalVisible}>
+                <Modal onClose={handleClose}>
                     <h4>Delete project?</h4>
                     <form>
                         <div>
@@ -40,8 +53,15 @@ export function ProjectCard(props: ProjectCardProps) {
                     </form>
                 </Modal>
             ) : isModalVisible.mode === "edit" ? (
-                <Modal onClose={setIsModalVisible}>
-                    <h1>Hello world</h1>
+                <Modal onClose={handleClose}>
+                    <h4>Edit project</h4>
+                    <form>
+                        <p>Project id: {props.data.id}</p>
+                        <p>Project title: {props.data.title}</p>
+                        <TextInput placeholder="Project title..." value={projectData.title} onChange={e => setProjectData({...projectData, title: e.target.value})}/>
+                        <TextInput placeholder="Project description..." value={projectData.desc} onChange={e => setProjectData({...projectData, desc: e.target.value})}/>
+                        <Button type="submit" value="Save" onClick={() => handleEditProject(props.data.id)}/>
+                    </form>
                 </Modal>
             ) : null : null}
             <ProjectCardStyle tabIndex={0}>

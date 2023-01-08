@@ -1,4 +1,13 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const opacityAnimation = keyframes`
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+`
 
 export const ModalStyle = styled.div`
     min-width: 100%;
@@ -11,6 +20,7 @@ export const ModalStyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: ${opacityAnimation} 0.1s linear;
     .container {
         background-color: #1E1E1E;
         color: ${props => props.theme.colors.text};
@@ -50,6 +60,9 @@ export const ModalStyle = styled.div`
                 flex-direction: column;
                 gap: 20px;
                 width: 60%;
+                p {
+                    font-size: ${props => props.theme.font.sm + 2}px;
+                }
                 div {
                     display: flex;
                     gap: 16px;

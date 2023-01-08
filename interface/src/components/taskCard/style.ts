@@ -24,7 +24,7 @@ export const TaskCardContainer = styled.div`
     p {
         font-weight: 500;
         line-height: 20px;
-        font-size: 15px;
+        font-size: ${props => props.theme.font.sm + 2}px;
     }
     span {
         display: flex;
