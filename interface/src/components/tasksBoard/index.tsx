@@ -5,16 +5,10 @@ import { List, Lists, Task } from "../../@types/data";
 import { useState } from "react";
 import { filterTasksByStatus } from "../../modules/filter";
 
-const taskList: Task[] = [
-    {id: "akjcaoskof", content: "Make server bridge adfasdf sad fsdgsdf gsdf gsdf.", status: 0, createdAt: "22-01-2022", projectId: "AS23"},
-    {id: "dofkasdof", content: "Fix drag and drop.", status: 0, createdAt: "22-01-2022", projectId: "AS23"},
-    {id: "adfaf", content: "Study nextjs.", status: 1, createdAt: "22-01-2022", projectId: "AS23"},
-    {id: "2124", content: "Study typescript.", status: 1, createdAt: "22-01-2022", projectId: "AS23"},
-    {id: "cvvdcv", content: "I dont know.", status: 2, createdAt: "22-01-2022", projectId: "AS23"},
-    {id: "adsfasdf", content: "ABABAUBEU", status: 2, createdAt: "22-01-2022", projectId: "AS23"},
-    {id: "34234dg", content: "NIOGNGNG", status: 3, createdAt: "22-01-2022", projectId: "AS23"},
-    {id: "gsfdh56", content: "0S020022.", status: 3, createdAt: "22-01-2022", projectId: "AS23"}
-] 
+interface TasksBoardProps {
+    data: Task[]
+    insertTask: (data: Task) => void
+}
 
 const lists: Lists = {
     todo: {id: 0, title: "TODO", tasks: [], creatable: true},
@@ -23,8 +17,8 @@ const lists: Lists = {
     done: {id: 3, title: "DONE", tasks: [], creatable: false} 
 }
 
-export function TasksBoard() {
-    const [data, setData] = useState<Task[]>(taskList);
+export function TasksBoard(props: TasksBoardProps) {
+    const [data, setData] = useState<Task[]>(props.data);
 
     lists.todo.tasks = filterTasksByStatus(0, data);
     lists.doing.tasks = filterTasksByStatus(1, data);
@@ -111,6 +105,7 @@ export function TasksBoard() {
                                 id={current.id}
                                 setTaskList={setData}
                                 taskList={data}
+                                insertTask={props.insertTask}
                             />
                         )})
                     }

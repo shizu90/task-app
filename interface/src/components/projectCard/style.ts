@@ -43,6 +43,12 @@ export const ProjectCardStyle = styled.div`
                 color: ${props => props.theme.colors.error};
             }
         }
+        .id {
+            width: 30%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
         font-size: ${props => props.theme.font.sm}px; 
         color: ${props => props.theme.colors.text}55;
     }

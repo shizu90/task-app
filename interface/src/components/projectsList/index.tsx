@@ -9,6 +9,9 @@ import { ProjectsListStyle } from "./style"
 
 interface ProjectsListProps {
     data: Project[]
+    insertProject: (data: Project) => void
+    deleteProject: (projectId: string) => void
+    editProject: (projectId: string, data: Project) => void
 }
 
 
@@ -16,13 +19,14 @@ export function ProjectsList(props: ProjectsListProps) {
     const {isModalVisible, setIsModalVisible} = useModal();
     const [projects, setProjects] = useState<Project[]>(props.data);
     const [projectData, setProjectData] = useState<Project>({id: "template", title: "", description: ""});
-    
+
     const handleClose = () => {
         setIsModalVisible({mode: "", visible: false});
     }
 
     const handleInsertProject = () => {
         if(projectData.title.length > 1 && projectData.description.length > 1) {
+            props.insertProject(projectData);
             setProjects([...projects, projectData]);
         }
         handleClose();
@@ -50,7 +54,13 @@ export function ProjectsList(props: ProjectsListProps) {
                 ) : null
                 }
                 {projects.map((project, index) => (
-                    <ProjectCard key={project.id} data={project} setProjects={setProjects} projects={projects}/>
+                    <ProjectCard 
+                        key={project.id} 
+                        data={project} 
+                        setProjects={setProjects} 
+                        projects={projects} 
+                        deleteProject={props.deleteProject}
+                        editProject={props.editProject}/>
                 ))}
             </div>
         </ProjectsListStyle>

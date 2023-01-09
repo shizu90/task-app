@@ -24,9 +24,9 @@ export function DashboardPage() {
             <Navbar/>
             <main>
                 <Routes>
-                    <Route path="/" element={<DashboardHome username={auth.auth.username || storage.username}/>}/>
-                    <Route path="/:projectId/tasks" element={<TasksPage/>}/>
-                    <Route path="/projects" element={<ProjectsPage/>}/>
+                    <Route path="/" element={<DashboardHome username={auth.auth.id || storage.id}/>}/>
+                    <Route path="/:projectId/tasks" element={<TasksPage token={auth.auth.token || storage.token} userId={auth.auth.id || storage.id}/>}/>
+                    <Route path="/projects" element={<ProjectsPage userId={auth.auth.id || storage.id} token={auth.auth.token || storage.token}/>}/>
                 </Routes>
             </main>
         </DashboardStyle>

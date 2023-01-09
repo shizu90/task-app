@@ -16,7 +16,8 @@ interface TaskListProps {
     title: string
     creatable: boolean
     setTaskList: (param: Task[]) => void
-    taskList: Task[] 
+    taskList: Task[]
+    insertTask: (data: Task) => void
 }
 
 export function TaskList(props: TaskListProps) {
@@ -31,6 +32,7 @@ export function TaskList(props: TaskListProps) {
         setTaskData({...taskData, id: generateGuid(8)})
         if(props.id === 0 && props.creatable) {
             props.setTaskList([...props.taskList, taskData]);
+            props.insertTask(taskData);
         }
         handleClose();
     }
