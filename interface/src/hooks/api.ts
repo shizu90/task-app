@@ -1,9 +1,22 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import toast from "react-hot-toast";
 import { LoginData, Project, SignUpData, Task, UserData } from "../@types/data";
+import { AuthType } from "../context/AuthContext";
 
 const defaultUrl = "http://localhost:3333";
 
 export function useApi() {
+
+    const errorHandler = (context: AuthType, error: AxiosError) => {
+        if(!error.response) return;
+        if(error.response.status === 401) {
+            localStorage.clear();
+            context.setAuth({id: "", token: "", username: ""});
+        }else {
+            toast.error(error.response.data.message);
+        }
+
+    }
 
     const login = (data: LoginData): Promise<AxiosResponse> => {
         return axios.post(`${defaultUrl}/users/login`, data);
@@ -102,6 +115,7 @@ export function useApi() {
     }
 
     return {
+        errorHandler,
         login,
         signUp,
         getUser,

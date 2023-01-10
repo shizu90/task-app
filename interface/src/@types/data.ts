@@ -1,7 +1,7 @@
 export interface Task {
-    id?: string
+    id: string
     content: string
-    createdAt?: string
+    createdAt: string
     projectId: string
     status: number // 0 = doing, 1 = todo, 2 = paused, 3 = done
 }
@@ -23,7 +23,7 @@ export interface Lists {
 export enum ListsTypes {"todo", "doing", "done", "paused"};
 
 export interface Project {
-    id?: string
+    id: string
     title: string
     description: string
     userId?: string

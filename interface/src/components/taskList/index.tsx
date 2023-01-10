@@ -18,6 +18,8 @@ interface TaskListProps {
     setTaskList: (param: Task[]) => void
     taskList: Task[]
     insertTask: (data: Task) => void
+    editTask: (data: Task, id: string) => void
+    deleteTask: (id: string) => void
 }
 
 export function TaskList(props: TaskListProps) {
@@ -33,6 +35,7 @@ export function TaskList(props: TaskListProps) {
         if(props.id === 0 && props.creatable) {
             props.setTaskList([...props.taskList, taskData]);
             props.insertTask(taskData);
+            setTaskData({id: "", content: "", createdAt: "", projectId: "", status: 0});
         }
         handleClose();
     }
@@ -57,7 +60,16 @@ export function TaskList(props: TaskListProps) {
             <Droppable droppableId={`${props.id}`}>
                 {(provided) => (
                     <ul {...provided.droppableProps} ref={provided.innerRef}>
-                        {props.data.map((card: any, index: number) => <TaskCard index={index} key={card.id} data={card} setTasksList={props.setTaskList} tasksList={props.taskList}/>)}        
+                        {props.data.map((card: any, index: number) => 
+                            <TaskCard 
+                                index={index} 
+                                key={card.id} 
+                                data={card} 
+                                setTasksList={props.setTaskList} 
+                                tasksList={props.taskList}
+                                editTask={props.editTask}
+                                deleteTask={props.deleteTask}
+                            />)}        
                         {provided.placeholder}
                     </ul>
                 )}

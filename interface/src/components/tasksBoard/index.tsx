@@ -8,6 +8,8 @@ import { filterTasksByStatus } from "../../modules/filter";
 interface TasksBoardProps {
     data: Task[]
     insertTask: (data: Task) => void
+    editTask: (data: Task, id: string) => void
+    deleteTask: (id: string) => void
 }
 
 const lists: Lists = {
@@ -73,6 +75,8 @@ export function TasksBoard(props: TasksBoardProps) {
                 taskToChange = {...task, status: Number(destination.droppableId)}
             }
         });
+        // Send data to database
+        props.editTask(taskToChange, taskToChange.id);
         // push current task to destination list and reorder it
         destList.tasks.push(taskToChange);
         let tasks = reorderList(destList, destList.tasks.length - 1, destination.index).tasks;
@@ -106,6 +110,8 @@ export function TasksBoard(props: TasksBoardProps) {
                                 setTaskList={setData}
                                 taskList={data}
                                 insertTask={props.insertTask}
+                                editTask={props.editTask}
+                                deleteTask={props.deleteTask}
                             />
                         )})
                     }

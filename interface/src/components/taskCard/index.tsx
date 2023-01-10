@@ -13,6 +13,8 @@ interface TaskCardProps {
     index: number
     setTasksList: (param: Task[]) => void
     tasksList: Task[]
+    editTask: (data: Task, id: string) => void
+    deleteTask: (id: string) => void
 }
 
 
@@ -29,16 +31,20 @@ export function TaskCard(props: TaskCardProps) {
         props.setTasksList(props.tasksList.filter(task => {
             return task.id !== props.data.id
         }));
+        props.deleteTask(task.id);
         handleClose();
     }
 
     const handleEdit = () => {
         setTask({...task, content})
-        props.setTasksList(props.tasksList.map(t => {
-            if(t.id === props.data.id) {
-                return {...task, content};
-            }else return t;
-        }));
+        if(task.content.length > 1) {
+            props.setTasksList(props.tasksList.map(t => {
+                if(t.id === props.data.id) {
+                    return {...task, content};
+                }else return t;
+            }));
+            props.editTask({...task, content}, task.id);
+        }
         handleClose();
     }
 
@@ -69,7 +75,12 @@ export function TaskCard(props: TaskCardProps) {
                 {(provided) => (
                     <TaskCardContainer {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef} key={task.id}>
                         <div>
-                            <LabelStatus color={"#67BF"}/>
+                            <LabelStatus color={
+                                task.status === 0 ?
+                                "#f2f2f2" : task.status === 1 ? 
+                                "#721DB5" : task.status === 2 ? 
+                                "#E5BD55" : "#2fce5c"
+                            }/>
                         </div>
                         <p>{task.content}</p>
                         <span>

@@ -1,10 +1,11 @@
 import { AxiosError} from "axios";
 import { Task } from "../../../@types/data";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { SideNavbar } from "../../../components/nav/sideNav";
 import { TasksBoard } from "../../../components/tasksBoard";
 import { useApi } from "../../../hooks/api";
+import { AuthContext } from "../../../context/AuthContext";
 
 interface TasksPageProps {
     token: string
@@ -13,17 +14,32 @@ interface TasksPageProps {
 
 export function TasksPage(props: TasksPageProps) {
     const [data, setData] = useState<Task[]>();
-
+    const context = useContext(AuthContext);
     const projectId: string = window.location.href.split("/")[5];
-    const {newTask, getTasks, updateTask, deleteTask} = useApi();
+    const {getTasks, newTask, updateTask, deleteTask, errorHandler} = useApi();
+
+    const handleEditTask = (data: Task, id: string) => {
+        updateTask(props.token, id, data)
+        .catch((err: AxiosError) => {
+            errorHandler(context, err);
+        })
+    }
+
+    const handleDeleteTask = (id: string) => {
+        deleteTask(props.token, id)
+        .then(res => toast.success("Deleted task successfully."))
+        .catch((err: AxiosError) => {
+            errorHandler(context, err);
+        })
+    }
 
     const handleInsertTask = (data: Task) => {
-        newTask(props.token, {content: data.content, status: 0, projectId: projectId})
+        newTask(props.token, {...data, projectId})
         .then(res => {
             toast.success(res.data);
         })
         .catch((err: AxiosError) => {
-            toast.error(err.response?.data.message);
+            errorHandler(context, err);
         })
     }
 
@@ -33,7 +49,7 @@ export function TasksPage(props: TasksPageProps) {
             setData(res.data.tasks);
         })
         .catch((err: AxiosError) => {
-            toast.error(err.response?.data.message);
+            errorHandler(context, err);
         })
     }, [])
 
@@ -44,7 +60,12 @@ export function TasksPage(props: TasksPageProps) {
                 data ? (
                     <>
                         <SideNavbar/>
-                        <TasksBoard data={data} insertTask={handleInsertTask}/>
+                        <TasksBoard 
+                            data={data} 
+                            insertTask={handleInsertTask}
+                            editTask={handleEditTask}
+                            deleteTask={handleDeleteTask}    
+                        />
                     </>
                 ) : (null)
             }
